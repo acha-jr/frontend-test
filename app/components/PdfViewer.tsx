@@ -18,7 +18,7 @@ export default function PdfViewer() {
   const [signatureImage, setSignatureImage] = useState<string | null>(null); // New state for signature image
   const [signaturePosition, setSignaturePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 }); // Track the signature's starting position
   const pdfContainerRef = useRef<HTMLDivElement | null>(null);
-  const viewerRef = useRef<any>(null);
+  const viewerRef = useRef<unknown>(null);
 
   // Missing handleMouseDown function
   const handleMouseDown = (event: MouseEvent) => {
@@ -67,16 +67,16 @@ export default function PdfViewer() {
         const regex = new RegExp(`\\b${selectedText}\\b`, "i"); // Word boundary match
         if (regex.test(span.textContent.trim())) {
           foundMatch = true;
-          span.style.backgroundColor = highlightColor;
-          span.style.cursor = "pointer";
-          span.onclick = () => {
+          (span as HTMLElement).style.backgroundColor = highlightColor;
+          (span as HTMLElement).style.cursor = "pointer";
+          (span as HTMLElement).addEventListener("click", () => {
             const matchingComment = comments.find(c => c.text === selectedText);
             if (matchingComment) {
               setSelectedComment(matchingComment.comment);
             } else {
               setSelectedComment("No comment available.");
             }
-          };
+          });
 
           span.querySelectorAll(".tooltip").forEach(el => el.remove());
         }
@@ -109,9 +109,9 @@ export default function PdfViewer() {
       if (span.textContent) {
         const regex = new RegExp(`\\b${underlinedText}\\b`, "i");
         if (regex.test(span.textContent.trim())) {
-          span.style.textDecoration = "underline";
-          span.style.textDecorationColor = highlightColor; // Match color selection
-          span.style.textDecorationThickness = "2px"; // Ensure visibility
+          (span as HTMLElement).style.textDecoration = "underline";
+          (span as HTMLElement).style.textDecorationColor = highlightColor; // Match color selection
+          (span as HTMLElement).style.textDecorationThickness = "2px"; // Ensure visibility
         }
       }
     });
@@ -192,7 +192,7 @@ export default function PdfViewer() {
     }
 
     html2canvas(docElement).then(canvas => {
-      const imgData = canvas.toDataURL("image/png");
+      const imgData = (canvas as HTMLCanvasElement).toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
       pdf.addImage(imgData, "PNG", 10, 10, 190, 277);
       pdf.save("annotated-document.pdf");
@@ -208,11 +208,11 @@ export default function PdfViewer() {
   useEffect(() => {
     const container = pdfContainerRef.current;
     if (container) {
-      container.addEventListener("mousedown", handleMouseDown as any);
+      container.addEventListener("mousedown", handleMouseDown as EventListener);
     }
     return () => {
       if (container) {
-        container.removeEventListener("mousedown", handleMouseDown as any);
+        container.removeEventListener("mousedown", handleMouseDown as EventListener);
       }
     };
   }, [isSigning]);
@@ -222,7 +222,7 @@ export default function PdfViewer() {
     if (isSigning) {
       initializeCanvas();
     } else {
-      const canvas = pdfContainerRef.current?.querySelector("canvas.signing-canvas");
+      const canvas = pdfContainerRef.current?.querySelector("canvas.signing-canvas") as HTMLCanvasElement;
       if (canvas) {
         const imageData = canvas.toDataURL("image/png");
         setSignatureImage(imageData); // Store the image in state
