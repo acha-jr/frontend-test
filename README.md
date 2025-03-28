@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# **Document Annotation & Signing Tool**  
 
-## Getting Started
+A web application for annotating and signing documents, with the ability to export them as a PDF while maintaining annotations and signatures.  
 
-First, run the development server:
+## **Setup and Running Instructions**  
 
+### **1. Clone the repository**  
+```bash
+git clone https://github.com/yourusername/document-signing-app.git
+cd document-signing-app
+```
+
+### **2. Install dependencies**  
+```bash
+npm install
+# or
+yarn install
+```
+
+### **3. Set up environment variables**  
+Create a `.env.local` file in the root directory and add any required environment variables.  
+
+### **4. Run the development server**  
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.  
+
+### **5. Build for production**  
+```bash
+npm run build
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## **Libraries and Tools Used**  
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### **1. Next.js (App Router)**
+- Used for **server-side rendering (SSR)** and improved performance.  
 
-## Learn More
+### **2. PDF.js**
+- Enables **PDF rendering** in the browser for annotations and signing.  
 
-To learn more about Next.js, take a look at the following resources:
+### **3. Fabric.js**
+- Allows **drawing annotations and signatures** on the document.  
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### **4. html2canvas & jsPDF**
+- Used for **capturing and exporting** the annotated document as a PDF.  
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### **5. Tailwind CSS**
+- For **responsive UI design** and faster styling.  
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## **Challenges Faced and Solutions**  
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### **1. Signature Positioning Issue**
+**Issue:** After signing, the signature moved to a different position.  
+**Solution:** Adjusted **canvas scaling** and **coordinate calculations** to maintain signature placement.  
+
+### **2. Exporting PDF with Annotations**
+**Issue:** Exported PDFs were missing annotations or had incorrect placements.  
+**Solution:** Used `html2canvas` to capture document elements and `jsPDF` to ensure correct rendering.  
+
+### **3. Maintaining Document Quality**
+**Issue:** Exported PDFs had a loss of quality.  
+**Solution:** Adjusted **canvas resolution** and **PDF compression settings** for clarity.  
+
+---
+
+## **Future Improvements**  
+
+✅ **Multi-User Collaboration**  
+- Allow multiple users to sign and annotate the same document.  
+
+✅ **Drag & Drop Signature Placement**  
+- Let users position signatures easily before finalizing.  
+
+✅ **Cloud Storage Integration**  
+- Save signed documents to **Google Drive** or **AWS S3**.  
+
+✅ **Better Mobile Support**  
+- Optimize signature input for touchscreen devices.  
+
+---
+
+### 🚀 **Contributions & Feedback**  
+Have suggestions? Feel free to open an issue or submit a pull request!  
