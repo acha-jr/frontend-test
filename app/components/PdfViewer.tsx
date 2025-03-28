@@ -18,7 +18,7 @@ export default function PdfViewer() {
   const [signatureImage, setSignatureImage] = useState<string | null>(null); // New state for signature image
   const [signaturePosition, setSignaturePosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 }); // Track the signature's starting position
   const pdfContainerRef = useRef<HTMLDivElement | null>(null);
-  const viewerRef = useRef<unknown>(null);
+  const viewerRef = useRef<Viewer | null>(null);
 
   // Missing handleMouseDown function
   const handleMouseDown = (event: MouseEvent) => {
